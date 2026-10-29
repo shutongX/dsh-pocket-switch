@@ -1,0 +1,60 @@
+{
+  "name": "dsh-pocket-switch",
+  "version": "0.1.0",
+  "private": false,
+  "description": "One-tap switching between DSH hosts from your phone: store addresses and access pins once, log in automatically, and use multiple machines like tabs.",
+  "type": "module",
+  "main": "./lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json",
+    "./icon": "./icon.svg",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "lib",
+    "README.md",
+    "cordis.patch.yml",
+    "LICENSE",
+    "icon.svg",
+    "locale"
+  ],
+  "license": "MIT",
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-slots"
+      ],
+      "platform": "web"
+    }
+  },
+  "scripts": {
+    "test": "node --test test/api.test.mjs test/client.test.mjs test/store.test.mjs test/pairing.test.mjs"
+  },
+  "author": "shutongX",
+  "homepage": "https://github.com/shutongX/dsh-pocket-switch#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shutongX/dsh-pocket-switch.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shutongX/dsh-pocket-switch/issues"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "dsh-pocket",
+    "remote",
+    "mobile",
+    "cordis"
+  ],
+  "engines": {
+    "dsh": ">=0.2.1-rc.1 <3"
+  },
+  "icon": "./icon.svg"
+}
