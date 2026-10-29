@@ -4,6 +4,8 @@
 
 Release 里已经有签好名的 `dsh-pocket-switch-app-<version>.apk`，普通用户直接下载安装即可，不需要构建。
 
+> Release 的 APK 用作者本地的密钥签名；你自己构建的是另一把钥匙。装过 Release 版的话，先卸载再装自己构建的，否则会报签名冲突。
+
 ## 自己构建
 
 需要：

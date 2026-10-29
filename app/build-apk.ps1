@@ -21,7 +21,8 @@ $Build = Join-Path $App "build"
 $Dist = Join-Path $Root "dist"
 $Checker = Join-Path $App "check-apk-entries.cjs"
 $Version = (Get-Content (Join-Path $Root "package.json") -Raw | ConvertFrom-Json).version
-$VersionCode = 1
+$VersionCode = 0
+foreach ($part in ($Version -split "\.")) { $VersionCode = $VersionCode * 100 + [int]$part }
 if (-not $Keystore) { $Keystore = Join-Path $App "keystore\release.jks" }
 
 $env:JAVA_HOME = $JavaHome

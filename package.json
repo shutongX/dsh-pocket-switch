@@ -1,6 +1,6 @@
 {
   "name": "dsh-pocket-switch",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": false,
   "description": "One-tap switching between DSH hosts from your phone: store addresses and access pins once, log in automatically, and use multiple machines like tabs.",
   "type": "module",

@@ -46,6 +46,9 @@ dsh-pocket-switch-app-<version>.apk
 - App 包名 `com.shutongx.dshphone`，只用 WebView + 本地 HTML，不含后台服务。
 
 
+
+> 如果你以前用开发目录装过旧的 `@dsh-external/<name>` 版本，先移除旧插件，再装这里的无 scope 包；否则同一功能会同时加载两份。
+
 ## 长什么样
 
 - 手机上打开 `/dsh-pocket-switch/`（可加到桌面）→ 一排「电脑」卡片，点一下跳过去，自动带上密码。
