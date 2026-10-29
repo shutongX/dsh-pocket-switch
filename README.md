@@ -32,6 +32,20 @@ dsh plugin --profile desktop add https://github.com/shutongX/dsh-pocket-switch
 
 依赖 [dsh-pocket](https://github.com/yjh051108/dsh-pocket)（手机访问插件）才能读本机配对信息；没有它也可以手动填写地址和密码。
 
+## 手机 App（可选，Android）
+
+仓库里带了一个极简 WebView 壳（`app/`）：内置离线「我的电脑」页面，装到手机上可以像 App 一样打开多台 DSH。Release 里有签好名的 APK：
+
+```text
+dsh-pocket-switch-app-<version>.apk
+```
+
+- 普通用户：直接下载 APK 安装即可，不需要构建。
+- 想自己构建：见 [app/BUILD-APK.md](app/BUILD-APK.md)。
+- App 里的机器列表存在手机本地，和 DSH 插件页里的「换电脑」清单是两套数据。
+- App 包名 `com.shutongx.dshphone`，只用 WebView + 本地 HTML，不含后台服务。
+
+
 ## 长什么样
 
 - 手机上打开 `/dsh-pocket-switch/`（可加到桌面）→ 一排「电脑」卡片，点一下跳过去，自动带上密码。

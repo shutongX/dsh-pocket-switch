@@ -4,3 +4,12 @@ node_modules/
 .DS_Store
 Thumbs.db
 npm-debug.log*
+
+# Android app build outputs and signing material
+app/build/
+app/dist/
+app/keystore/
+app/build-tools/
+app/platform/
+app/downloads/
+dist/

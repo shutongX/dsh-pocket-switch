@@ -1,0 +1,214 @@
+/* 我的电脑 · 手机端样式。深浅色跟随系统，纯手写，无第三方样式库。 */
+:root{
+  --paper:#f4f1ea; --side:#efece4; --pane:#fbfaf7; --ink:#1e1d1a; --muted:#8c8779;
+  --hair:rgba(30,29,26,.10); --sel:rgba(30,29,26,.055); --green:#3f7d4f; --red:#b4443c;
+  --accent:#2c2b26; --radius:16px;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --paper:#14140f; --side:#191813; --pane:#100f0c; --ink:#efede6; --muted:#8a8578;
+    --hair:rgba(239,237,230,.10); --sel:rgba(239,237,230,.07); --green:#6fbf85; --red:#e5736a; --accent:#efede6; }
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none !important}
+html,body{height:100%;margin:0}
+body{
+  background:var(--paper); color:var(--ink); overflow:hidden;
+  font:16px/1.45 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+.app{display:flex;height:100%}
+
+/* ---------- 侧边栏 ---------- */
+.side{
+  width:308px;flex:0 0 308px;height:100%;background:var(--side);border-right:1px solid var(--hair);
+  display:flex;flex-direction:column;
+  transition:transform .26s cubic-bezier(.22,.75,.2,1), opacity .2s;
+}
+.brand{display:flex;align-items:center;gap:10px;padding:calc(env(safe-area-inset-top) + 22px) 22px 16px}
+.fish{width:30px;height:30px;flex:0 0 auto;display:block}
+.brand b{font-size:17px;letter-spacing:-.015em;font-weight:650}
+.brand span{margin-left:auto;font-size:12px;color:var(--muted);white-space:nowrap}
+
+.conns{flex:1;overflow-y:auto;padding:4px 12px 12px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.conns::-webkit-scrollbar{display:none}
+.conn{
+  width:100%;text-align:left;background:transparent;border:0;border-radius:12px;
+  padding:13px 12px;display:flex;align-items:center;gap:11px;cursor:pointer;
+  color:inherit;font:inherit;transition:background .15s;
+}
+.conn + .conn{margin-top:2px}
+.conn:hover{background:color-mix(in srgb,var(--sel) 60%,transparent)}
+.conn.active{background:var(--sel)}
+.conn .txt{min-width:0;flex:1}
+.conn .n{font-size:15px;font-weight:560;letter-spacing:-.01em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.conn .h{margin-top:3px;font-size:11.5px;color:var(--muted);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.conns-empty{padding:30px 16px;text-align:center;color:var(--muted);font-size:13px;line-height:1.7}
+.conns-empty p{margin:0}
+.conns-empty .sub{font-size:12px;opacity:.8;margin-top:4px}
+
+.dot{width:6px;height:6px;border-radius:50%;flex:0 0 auto;background:var(--muted)}
+.dot.on{background:var(--green)} .dot.off{background:transparent;box-shadow:inset 0 0 0 1.4px var(--red)}
+/* 探测中：空心 + 闪烁，和「连不上」的实心红点区分开 */
+.dot.probing{background:transparent;box-shadow:inset 0 0 0 1.4px var(--muted);animation:dot-pulse 1s ease-in-out infinite}
+@keyframes dot-pulse{0%,100%{opacity:.3}50%{opacity:1}}
+@media (prefers-reduced-motion: reduce){.dot.probing{animation:none;opacity:.65}}
+
+.sidefoot{padding:12px 12px calc(env(safe-area-inset-bottom) + 16px);border-top:1px solid var(--hair)}
+.add{width:100%;height:42px;border-radius:12px;border:1px dashed var(--hair);background:transparent;color:var(--muted);
+  font:inherit;font-size:14px;cursor:pointer;transition:.15s}
+.add:hover{color:var(--ink);border-color:color-mix(in srgb,var(--ink) 25%,transparent)}
+
+/* ---------- 主区 ---------- */
+.pane{flex:1;min-width:0;height:100%;background:var(--pane);display:flex;flex-direction:column;overflow:hidden}
+.pane-head{display:flex;align-items:center;gap:14px;padding:calc(env(safe-area-inset-top) + 20px) 26px 14px}
+.toggle{
+  width:36px;height:36px;border-radius:11px;border:1px solid var(--hair);background:transparent;color:var(--ink);
+  display:grid;place-items:center;cursor:pointer;flex:0 0 auto;transition:.15s
+}
+.toggle:hover{background:var(--sel)}
+.toggle svg{width:16px;height:16px}
+.pane-head h1{margin:0;font-size:26px;letter-spacing:-.03em;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pane-body{flex:1;overflow-y:auto;padding:6px 26px 40px;-webkit-overflow-scrolling:touch}
+
+.status{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--muted);margin-bottom:20px}
+.status .dot{width:7px;height:7px}
+
+.field{padding:18px 0;border-top:1px solid var(--hair)}
+.field:first-of-type{border-top:0}
+.label{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:9px}
+.val{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13.5px;word-break:break-all;line-height:1.5}
+.pinrow{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.pinval{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:22px;letter-spacing:.14em;font-weight:600;word-break:break-all}
+.pin-input{flex:1;min-width:0}
+.pin-save{height:40px;padding:0 18px;border-radius:11px;border:0;background:var(--accent);color:var(--pane);
+  font:inherit;font-size:14px;font-weight:600;cursor:pointer;flex:0 0 auto}
+.switch-row{display:flex;align-items:flex-start;gap:10px;margin-top:16px}
+.switch{width:36px;height:20px;border-radius:999px;border:1px solid var(--hair);background:transparent;position:relative;
+  cursor:pointer;flex:0 0 auto;padding:0;transition:.18s}
+.switch span{position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:var(--muted);transition:.18s}
+.switch[aria-checked="true"]{background:var(--accent);border-color:var(--accent)}
+.switch[aria-checked="true"] span{left:18px;background:var(--pane)}
+.switch-text{font-size:12.5px;line-height:1.5;color:var(--muted)}
+.switch-text b{display:block;color:var(--ink);font-size:13px;font-weight:560;margin-bottom:2px}
+.iconbtn{width:34px;height:34px;border-radius:10px;border:1px solid var(--hair);background:transparent;color:var(--muted);
+  display:grid;place-items:center;cursor:pointer;transition:.15s;flex:0 0 auto}
+.iconbtn:hover{color:var(--ink);background:var(--sel)}
+.iconbtn svg{width:15px;height:15px}
+
+.go{
+  margin-top:24px;width:100%;height:54px;border-radius:14px;border:0;cursor:pointer;
+  background:var(--accent);color:var(--pane);font:inherit;font-size:16px;font-weight:620;letter-spacing:.01em;
+  display:flex;align-items:center;justify-content:center;gap:9px;transition:transform .12s,opacity .15s
+}
+.go:active{transform:scale(.99);opacity:.9}
+.go svg{width:16px;height:16px}
+.note{margin-top:14px;font-size:12.5px;color:var(--muted);line-height:1.6}
+.note.tight{margin-top:10px}
+.fallback{margin-top:10px;font-size:13px;line-height:1.6}
+.fallback a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+
+.manage-row{display:flex;flex-wrap:wrap;gap:8px}
+.ghost{
+  height:34px;padding:0 13px;border-radius:10px;border:1px solid var(--hair);background:transparent;
+  color:var(--muted);font:inherit;font-size:13px;cursor:pointer;transition:.15s
+}
+.ghost:hover{color:var(--ink);background:var(--sel)}
+.ghost.danger{color:var(--red)}
+.ghost.danger:hover{background:color-mix(in srgb,var(--red) 10%,transparent);color:var(--red)}
+
+/* 空态 */
+.empty{display:flex;flex-direction:column;align-items:center;text-align:center;padding:10vh 8px 0;gap:8px}
+.empty .fish.big{width:88px;height:88px;margin-bottom:6px}
+.empty h2{margin:0;font-size:21px;letter-spacing:-.02em}
+.empty p{margin:0;max-width:300px;font-size:13.5px;color:var(--muted);line-height:1.7}
+.empty .go{max-width:300px;margin-top:18px}
+
+/* ---------- 收起后的悬浮小标 ---------- */
+.fab{
+  position:fixed;left:16px;top:calc(env(safe-area-inset-top) + 16px);z-index:30;
+  height:40px;padding:0 14px 0 10px;border-radius:999px;border:1px solid var(--hair);
+  background:color-mix(in srgb,var(--pane) 88%,transparent);backdrop-filter:blur(14px) saturate(160%);
+  color:var(--ink);display:flex;align-items:center;gap:8px;cursor:pointer;font:inherit;font-size:13.5px;
+  box-shadow:0 6px 24px -10px rgba(0,0,0,.35);
+  opacity:0;transform:translateX(-10px) scale(.96);pointer-events:none;transition:.22s cubic-bezier(.22,.75,.2,1)
+}
+.fab.show{opacity:1;transform:none;pointer-events:auto}
+.fab .fish{width:22px;height:22px}
+
+.scrim{position:fixed;inset:0;background:rgba(20,18,14,.28);z-index:9;opacity:0;pointer-events:none;transition:.22s}
+.scrim.show{opacity:1;pointer-events:auto}
+
+/* ---------- 手机宽度 ---------- */
+@media (max-width: 780px){
+  .side{position:fixed;z-index:10;left:0;top:0;width:min(86vw,330px);transform:translateX(-102%);
+    box-shadow:24px 0 60px -30px rgba(0,0,0,.5)}
+  .side.open{transform:none}
+  /* 悬浮小标（鱼 + 切换）在左上角，标题要让开，否则会叠在一起 */
+  .pane-head{padding-left:104px}
+  .toggle{display:none}
+  .pane-body{padding-left:20px;padding-right:20px}
+  .pane-head h1{font-size:22px}
+}
+@media (min-width: 781px){
+  .fab{display:none}
+  .scrim{display:none}
+  .side.collapsed{transform:translateX(-100%);position:absolute;opacity:0;pointer-events:none}
+  .pane-head{padding-left:22px}
+}
+
+/* ---------- toast ---------- */
+.toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom) + 24px);transform:translateX(-50%) translateY(8px);
+  background:rgba(24,22,18,.93);color:#fff;padding:10px 18px;border-radius:999px;font-size:13px;opacity:0;transition:.22s;z-index:70;pointer-events:none;
+  max-width:calc(100vw - 48px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ---------- 添加连接抽屉 ---------- */
+.sheet-wrap{position:fixed;inset:0;z-index:40;display:flex;align-items:flex-end;justify-content:center;
+  background:rgba(20,18,14,.34);opacity:0;pointer-events:none;transition:opacity .2s}
+.sheet-wrap.show{opacity:1;pointer-events:auto}
+.sheet{width:min(100%,520px);max-height:92dvh;display:flex;flex-direction:column;background:var(--pane);
+  border:1px solid var(--hair);border-bottom:0;border-radius:20px 20px 0 0;
+  padding-bottom:env(safe-area-inset-bottom);
+  transform:translateY(18px);transition:transform .26s cubic-bezier(.22,.75,.2,1)}
+.sheet-wrap.show .sheet{transform:none}
+.sheet-head{display:flex;align-items:center;gap:12px;padding:16px 18px 6px}
+.sheet-head h2{margin:0;font-size:18px;letter-spacing:-.02em;flex:1}
+.sheet-body{padding:6px 18px 4px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.sheet-body .label{margin-top:14px}
+.sheet-body .label:first-child{margin-top:0}
+.sheet-foot{display:flex;gap:10px;padding:14px 18px 18px;border-top:1px solid var(--hair);margin-top:12px}
+.sheet-foot .btn{flex:1}
+
+.input,.textarea{width:100%;background:color-mix(in srgb,var(--pane) 55%,transparent);color:inherit;
+  border:1px solid var(--hair);border-radius:11px;padding:11px 12px;font:inherit;font-size:16px}
+.input:focus,.textarea:focus{outline:none;border-color:color-mix(in srgb,var(--ink) 30%,transparent)}
+.textarea{min-height:82px;resize:vertical;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:13px;line-height:1.5;word-break:break-all}
+.input.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.06em}
+.hint{margin-top:8px;font-size:12.5px;line-height:1.6;color:var(--muted);min-height:1em}
+.hint.good{color:var(--green)}
+.hint.bad{color:var(--red)}
+.row{display:flex;align-items:center;gap:10px;margin-top:10px}
+.linkbtn{border:0;background:transparent;color:var(--muted);font:inherit;font-size:13px;cursor:pointer;
+  text-decoration:underline;text-underline-offset:3px;padding:0}
+.linkbtn:hover{color:var(--ink)}
+
+.btn{height:44px;border-radius:12px;border:0;cursor:pointer;font:inherit;font-size:15px;font-weight:600;
+  background:var(--accent);color:var(--pane);transition:.15s}
+.btn:active{opacity:.9}
+.btn.ghost{background:transparent;color:var(--muted);border:1px solid var(--hair)}
+.btn.ghost:hover{color:var(--ink);background:var(--sel)}
+
+/* ---------- 小对话框（改名 / 删除确认） ---------- */
+.modal-wrap{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;padding:20px;
+  background:rgba(20,18,14,.34);opacity:0;pointer-events:none;transition:opacity .18s}
+.modal-wrap.show{opacity:1;pointer-events:auto}
+.modal{width:min(100%,360px);background:var(--pane);border:1px solid var(--hair);border-radius:var(--radius);
+  box-shadow:0 24px 60px -24px rgba(0,0,0,.5);padding:20px;transform:scale(.97);transition:transform .18s}
+.modal-wrap.show .modal{transform:none}
+.modal h2{margin:0 0 8px;font-size:17px;letter-spacing:-.01em}
+.modal p{margin:0 0 14px;font-size:13px;color:var(--muted);line-height:1.6}
+.modal .modal-foot{display:flex;gap:10px;margin-top:16px}
+.modal .modal-foot .btn{flex:1;height:40px}
+.modal .btn.danger{background:var(--red);color:#fff}
