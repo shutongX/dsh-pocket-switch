@@ -41,7 +41,7 @@ dsh-pocket-switch-app-<version>.apk
 ```
 
 - 普通用户：直接下载 APK 安装即可，不需要构建。
-- 想自己构建：见 [app/BUILD-APK.md](app/BUILD-APK.md)。
+- 想自己构建：见 [app/BUILD-APK.md](https://github.com/shutongX/dsh-pocket-switch/blob/main/app/BUILD-APK.md)。
 - App 里的机器列表存在手机本地，和 DSH 插件页里的「换电脑」清单是两套数据。
 - App 包名 `com.shutongx.dshphone`，只用 WebView + 本地 HTML，不含后台服务。
 
